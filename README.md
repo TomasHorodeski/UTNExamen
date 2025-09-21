@@ -37,6 +37,7 @@ El proyecto se levanta con **Docker Compose** y expone endpoints REST.
 1. Clonar el repositorio:
 
 git clone https://github.com/TomasHorodeski/UTNExamen.git
+
 cd UTNExamen
 
 2. Levantar con Docker:
