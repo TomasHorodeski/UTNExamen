@@ -11,27 +11,6 @@ El proyecto se levanta con **Docker Compose** y expone endpoints REST.
 
 ---
 
-## Variables de entorno
-1. Crear tu archivo `.env` a partir del ejemplo:
-
-   cp .env.example .env
-   
-
-2. Valores por defecto:
-   env:
-
-   DB_HOST=db
-   DB_PORT=3306
-   DB_USER=root
-   DB_PASSWORD=root
-   DB_NAME=UTNExamen
-
-   JWT_SECRET=supersecreto123
-   PORT=3000
-   
-
----
-
 ## Levantar el proyecto
 
 1. Clonar el repositorio:
@@ -47,6 +26,13 @@ docker compose up -d --build
 
 - **API:** [http://localhost:3000](http://localhost:3000)  
 - **MySQL:** host `127.0.0.1`, puerto `3309`, usuario `root`, pass `root`, DB `UTNExamen`
+
+---
+
+## Variables de entorno
+1. Crear tu archivo `.env` a partir del ejemplo:
+
+   cp .env.example .env
 
 ---
 
