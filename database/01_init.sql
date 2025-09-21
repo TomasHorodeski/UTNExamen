@@ -59,7 +59,7 @@ INSERT INTO Usuario (nombre, email, password, role)
 VALUES (
   'Usuario de Prueba',
   'user@utn.test',
-  '$2b$10$jpECL0AoMQzyMDa0PFKin.LP3MPNJ0/5kVLvwQcHMDnhWpcx/BaBu', 
+  '$2b$10$zJxKbnka2dVBNvBrJu4H0OwdgacH4rIyy0sDw4Oj6AVuvLVDIJYxK', 
   'user'
 )
 ON DUPLICATE KEY UPDATE email=email;
