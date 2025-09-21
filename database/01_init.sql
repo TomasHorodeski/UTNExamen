@@ -1,0 +1,66 @@
+CREATE DATABASE IF NOT EXISTS UTNExamen;
+USE UTNExamen;
+
+CREATE TABLE IF NOT EXISTS Usuario (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  email VARCHAR(120) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  role ENUM('superAdmin','admin','user') NOT NULL DEFAULT 'user',
+  creadoEn DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  actualizadoEn DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS Producto (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(150) NOT NULL,
+  precio DECIMAL(10,2) NOT NULL,
+  stock INT NOT NULL DEFAULT 0,
+  creadoEn DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  actualizadoEn DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS Pedido (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  usuarioId INT NOT NULL,
+  creadoEn DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  actualizadoEn DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_pedido_usuario FOREIGN KEY (usuarioId) REFERENCES Usuario(id)
+    ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS OrderItem (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  pedidoId INT NOT NULL,
+  productoId INT NOT NULL,
+  cantidad INT NOT NULL DEFAULT 1,
+  precioUnit DECIMAL(10,2) NOT NULL,
+  CONSTRAINT fk_item_pedido FOREIGN KEY (pedidoId) REFERENCES Pedido(id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_item_producto FOREIGN KEY (productoId) REFERENCES Producto(id)
+    ON DELETE RESTRICT ON UPDATE CASCADE,
+  UNIQUE KEY uq_pedido_producto (pedidoId, productoId)
+) ENGINE=InnoDB;
+
+CREATE INDEX idx_pedido_usuario ON Pedido(usuarioId);
+CREATE INDEX idx_item_pedido ON OrderItem(pedidoId);
+CREATE INDEX idx_item_producto ON OrderItem(productoId);
+
+INSERT INTO Usuario (nombre, email, password, role)
+VALUES (
+  'Super Admin',
+  'admin@utn.test',
+  '$2b$10$jpECL0AoMQzyMDa0PFKin.LP3MPNJ0/5kVLvwQcHMDnhWpcx/BaBu', 
+  'superAdmin'
+)
+ON DUPLICATE KEY UPDATE email=email;
+
+INSERT INTO Usuario (nombre, email, password, role)
+VALUES (
+  'Usuario de Prueba',
+  'user@utn.test',
+  '$2b$10$jpECL0AoMQzyMDa0PFKin.LP3MPNJ0/5kVLvwQcHMDnhWpcx/BaBu', 
+  'user'
+)
+ON DUPLICATE KEY UPDATE email=email;
+
