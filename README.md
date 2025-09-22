@@ -7,16 +7,15 @@ El proyecto se levanta con **Docker Compose** y expone endpoints REST.
 
 ## Levantar el proyecto
 
-1. Clonar el repositorio:
+`Clonar el repositorio`:
 
-git clone https://github.com/TomasHorodeski/UTNExamen.git
+1. git clone https://github.com/TomasHorodeski/UTNExamen.git
 
-cd UTNExamen
+2. cd UTNExamen
 
-2. Levantar con Docker:
+`Levantar con Docker`:
 
-docker compose up -d --build
-
+1. docker compose up -d --build
 
 - **API:** [http://localhost:3000](http://localhost:3000)  
 - **MySQL:** host `127.0.0.1`, puerto `3309`, usuario `root`, pass `root`, DB `UTNExamen`
@@ -24,9 +23,10 @@ docker compose up -d --build
 ---
 
 ## Variables de entorno
-1. Crear tu archivo `.env` a partir del ejemplo:
 
-   cp .env.example .env
+Crear tu archivo `.env` a partir del ejemplo:
+
+1. cp .env.example .env
 
 ---
 
