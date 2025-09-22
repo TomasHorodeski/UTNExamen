@@ -92,7 +92,7 @@ Contraseñas están hasheadas con **bcrypt**.
 
 ## Reportes con consultas JOIN y WHERE
 
-El sistema incluye reportes generados con consultas SQL: 3 ejemplos SQL
+El sistema incluye reportes generados con consultas SQL: `3 ejemplos SQL`
 
 `Lista Pedidos por Usuario`: Muestra todos los pedidos de un usuario en particular (por email).
 
