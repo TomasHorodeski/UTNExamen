@@ -36,6 +36,26 @@ docker compose up -d --build
 
 ---
 
+## Autenticación y Roles:
+
+Registro de usuario con `contraseña hasheada`
+
+Login que devuelve `JWT`
+
+Middleware para validar `token`
+
+---
+
+## Guards de roles:
+
+`superAdmin`: crear y eliminar usuarios
+
+`admin`: gestiona productos
+
+`user`: crear pedidos
+
+---
+
 ## Seed inicial y relaciones
 - Tablas: `Usuario`, `Producto`, `Pedido`, `OrderItem`  
 - Relaciones:
@@ -73,5 +93,45 @@ Contraseñas están hasheadas con **bcrypt**.
 ### Usuarios
 - `GET /api/usuarios/reporte` → **admin/superAdmin**
 - `DELETE /api/usuarios/:id` → **superAdmin**
+
+---
+
+## Reportes con consultas JOIN y WHERE
+
+El sistema incluye reportes generados con consultas SQL: 3 ejemplos SQL
+
+`Lista Pedidos por Usuario`: Muestra todos los pedidos de un usuario en particular (por email).
+
+SELECT p.id AS pedido_id, u.email
+FROM Pedido p
+JOIN Usuario u ON p.usuarioId = u.id
+WHERE u.email = 'user@utn.test';
+
+`Total de Productos en un Pedido`: Calcula la cantidad total de productos en un pedido específico.
+
+SELECT p.id AS pedido_id, SUM(oi.cantidad) AS total_productos
+FROM Pedido p
+JOIN OrderItem oi ON p.id = oi.pedidoId
+WHERE p.id = 1
+GROUP BY p.id;
+
+`Usuarios con más Pedidos`: Cuenta cuántos pedidos hizo cada usuario con rol user y los ordena de mayor a menor.
+
+SELECT u.email, COUNT(p.id) AS total_pedidos
+FROM Usuario u
+JOIN Pedido p ON u.id = p.usuarioId
+WHERE u.rol = 'user'
+GROUP BY u.id, u.email
+ORDER BY total_pedidos DESC;
+
+---
+
+## Validaciones y manejo de errores
+
+1. Validación de inputs en register, login, productos y pedidos
+
+2. Manejo centralizado de errores con middleware (try/catch y next(err))
+
+3. Respuestas consistentes con códigos HTTP adecuados (400, 401, 403, 404, 500)
 
 ---
