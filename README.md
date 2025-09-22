@@ -5,12 +5,6 @@ El proyecto se levanta con **Docker Compose** y expone endpoints REST.
 
 ---
 
-## Requisitos
-- **Docker Desktop** 
-- **Git**
-
----
-
 ## Levantar el proyecto
 
 1. Clonar el repositorio:
@@ -103,25 +97,37 @@ El sistema incluye reportes generados con consultas SQL: 3 ejemplos SQL
 `Lista Pedidos por Usuario`: Muestra todos los pedidos de un usuario en particular (por email).
 
 SELECT p.id AS pedido_id, u.email
+
 FROM Pedido p
+
 JOIN Usuario u ON p.usuarioId = u.id
+
 WHERE u.email = 'user@utn.test';
 
 `Total de Productos en un Pedido`: Calcula la cantidad total de productos en un pedido específico.
 
 SELECT p.id AS pedido_id, SUM(oi.cantidad) AS total_productos
+
 FROM Pedido p
+
 JOIN OrderItem oi ON p.id = oi.pedidoId
+
 WHERE p.id = 1
+
 GROUP BY p.id;
 
 `Usuarios con más Pedidos`: Cuenta cuántos pedidos hizo cada usuario con rol user y los ordena de mayor a menor.
 
 SELECT u.email, COUNT(p.id) AS total_pedidos
+
 FROM Usuario u
+
 JOIN Pedido p ON u.id = p.usuarioId
+
 WHERE u.rol = 'user'
+
 GROUP BY u.id, u.email
+
 ORDER BY total_pedidos DESC;
 
 ---
